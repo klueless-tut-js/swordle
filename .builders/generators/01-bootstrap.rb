@@ -28,7 +28,7 @@ KManager.action :bootstrap do
         # run_command('git init')
       end
       .blueprint(
-        active: true,
+        active: false,
         name: :bin_hook,
         description: 'initialize repository',
         on_exist: :write) do
@@ -49,8 +49,14 @@ KManager.action :bootstrap do
         description: 'Set up the package.json file for semantic versioning'
       ) do
         self
-          .add('package.json', dom: dom)
-          .play_actions
+          .run_command('npm init svelte@next')
+          # .run_command('npm run dev')
+          # .run_command('npm run dev -- --open')
+          # .run_command('npm run build')
+
+        # self
+        #   .add('package.json', dom: dom)
+        #   .play_actions
 
         # self
         #   .add_script('xxx', 'xxx')
@@ -61,7 +67,7 @@ KManager.action :bootstrap do
         # run_command("git add .; git commit -m 'chore: #{self.options.description.downcase}'; git push")
       end
       .blueprint(
-        active: false,
+        active: true,
         name: :opinionated,
         description: 'opinionated files',
         on_exist: :write) do
@@ -74,7 +80,7 @@ KManager.action :bootstrap do
         # add('main.css'  , dom: dom)
         # add('main.js'   , dom: dom)
 
-        # run_command("git add .; git commit -m 'chore: #{self.options.description.downcase}'; git push")
+        run_command("git add .; git commit -m 'chore: #{self.options.description.downcase}'; git push")
       end
 
     director.play_actions
